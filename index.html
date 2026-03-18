@@ -1,395 +1,436 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Hungarian Revolution 1956 - Cold War Project</title>
+    <title>Hungarian Revolution 1956</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: Georgia, serif;
-            background-color: #111;
-            color: #eee;
+            font-family: 'Lato', sans-serif;
+            background: #0d0d0d;
+            color: #e8e0d0;
         }
 
-        .flag-bar {
+        /* ---- HERO ---- */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(to bottom, #1a0000 0%, #0d0d0d 100%);
             display: flex;
-            height: 8px;
-        }
-        .flag-bar div { flex: 1; }
-
-        .header {
-            background: linear-gradient(135deg, #6b0000, #8b0000);
-            padding: 50px 20px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             text-align: center;
-        }
-
-        .header h1 {
-            font-size: 52px;
-            color: white;
-            margin-bottom: 8px;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
-        }
-
-        .header .subtitle {
-            color: #ffcc88;
-            font-size: 15px;
-            letter-spacing: 2px;
-        }
-
-        .header .dates {
-            font-size: 22px;
-            color: #ffd080;
-            margin-top: 10px;
-            font-style: italic;
-        }
-
-        .container {
-            max-width: 1050px;
-            margin: 0 auto;
-            padding: 35px 20px;
-        }
-
-        /* section styling */
-        .section {
-            background: #1e1e1e;
-            border-radius: 10px;
-            padding: 30px;
-            margin-bottom: 28px;
-            border-left: 5px solid #cc2200;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-        }
-
-        .section h2 {
-            font-size: 26px;
-            color: #f0a040;
-            margin-bottom: 18px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #333;
-        }
-
-        .section p {
-            line-height: 1.75;
-            color: #ccc;
-            margin-bottom: 14px;
-            font-size: 15px;
-        }
-
-        /* timeline */
-        .timeline {
             position: relative;
-            margin: 20px 0;
-            padding-left: 30px;
-            border-left: 2px solid #cc2200;
+            overflow: hidden;
         }
 
-        .timeline-item {
+        /* subtle flag stripes in background */
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent 0%,
+                transparent 32%,
+                rgba(206,41,57,0.06) 32%,
+                rgba(206,41,57,0.06) 34%,
+                transparent 34%,
+                transparent 66%,
+                rgba(255,255,255,0.03) 66%,
+                rgba(255,255,255,0.03) 68%,
+                transparent 68%,
+                transparent 99%,
+                rgba(71,112,80,0.06) 99%
+            );
+        }
+
+        .hero-eyebrow {
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #c8a84b;
             margin-bottom: 20px;
             position: relative;
         }
 
-        .timeline-item::before {
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(42px, 8vw, 90px);
+            font-weight: 900;
+            color: white;
+            line-height: 1.05;
+            position: relative;
+            text-shadow: 0 0 60px rgba(200,0,0,0.3);
+        }
+
+        .hero h1 .red { color: #cc2200; }
+
+        .hero-dates {
+            margin-top: 18px;
+            font-size: 16px;
+            color: #c8a84b;
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        .hero-desc {
+            max-width: 550px;
+            margin: 20px auto 0;
+            font-size: 16px;
+            color: rgba(232,224,208,0.6);
+            line-height: 1.7;
+            font-weight: 300;
+            position: relative;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.3);
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        .scroll-hint::after {
+            content: '';
+            display: block;
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, rgba(200,168,75,0.5), transparent);
+            animation: scrollline 1.8s ease infinite;
+        }
+        @keyframes scrollline { 0%,100%{opacity:0.3;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(1.2)} }
+
+        /* ---- CONTENT ---- */
+        .page {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .section-wrap {
+            padding: 60px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .section-label {
+            font-size: 11px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #c8a84b;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section-label::before { content:''; display:block; width:32px; height:1px; background:#c8a84b; }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(28px, 4vw, 42px);
+            font-weight: 700;
+            color: white;
+            line-height: 1.2;
+            margin-bottom: 24px;
+        }
+
+        p {
+            line-height: 1.8;
+            color: rgba(232,224,208,0.72);
+            font-size: 15px;
+            font-weight: 300;
+            margin-bottom: 14px;
+        }
+
+        /* ---- GRID LAYOUTS ---- */
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+        .three-col { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+
+        /* ---- TIMELINE ---- */
+        .timeline { position: relative; padding-left: 24px; border-left: 1px solid rgba(200,168,75,0.35); }
+        .tl-item { margin-bottom: 22px; position: relative; }
+        .tl-item::before {
             content: '';
             position: absolute;
-            left: -37px;
-            top: 5px;
-            width: 12px;
-            height: 12px;
-            background: #cc2200;
+            left: -29px;
+            top: 6px;
+            width: 9px; height: 9px;
             border-radius: 50%;
-            border: 2px solid #f0a040;
+            background: #cc2200;
+            border: 1px solid #c8a84b;
         }
+        .tl-year { font-size: 11px; color: #c8a84b; letter-spacing: 2px; text-transform:uppercase; margin-bottom: 3px; }
+        .tl-item strong { display: block; color: #e8e0d0; font-size: 14px; margin-bottom: 3px; }
+        .tl-item p { font-size: 13px; color: rgba(232,224,208,0.5); margin: 0; }
 
-        .timeline-item .year {
-            color: #f0a040;
-            font-size: 13px;
-            font-weight: bold;
-            margin-bottom: 3px;
-        }
+        /* ---- IMAGES ---- */
+        .img-grid { display: grid; gap: 14px; margin-top: 28px; }
+        .img-grid.two { grid-template-columns: 1fr 1fr; }
+        .img-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+        .img-grid.featured { grid-template-columns: 2fr 1fr; }
 
-        .timeline-item p {
-            margin: 0;
-            font-size: 14px;
-            color: #bbb;
-        }
-
-        .timeline-item strong {
-            color: #eee;
-        }
-
-        /* images */
-        .img-row {
-            display: flex;
-            gap: 15px;
-            margin-top: 22px;
-            flex-wrap: wrap;
-        }
-
-        .img-box {
-            flex: 1;
-            min-width: 180px;
-            background: #2a2a2a;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid #444;
-            transition: transform 0.2s;
-        }
-
-        .img-box:hover { transform: scale(1.02); }
-
-        .img-box img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            display: block;
-        }
-
-        .img-box .caption {
-            padding: 8px 12px;
-            font-size: 12px;
-            color: #999;
-            font-style: italic;
-        }
-
-        /* two column layout */
-        .two-col {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            align-items: start;
-        }
-
-        /* map */
-        #map {
-            width: 100%;
-            height: 480px;
-            border-radius: 8px;
-            border: 1px solid #444;
-            margin-top: 15px;
-        }
-
-        /* outcome boxes */
-        .outcome-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .outcome-box {
-            padding: 18px;
-            border-radius: 8px;
-        }
-
-        .outcome-box.loss {
-            background: rgba(139,0,0,0.2);
-            border: 1px solid #8b0000;
-        }
-
-        .outcome-box.win-long {
-            background: rgba(0,100,0,0.15);
-            border: 1px solid #336633;
-        }
-
-        .outcome-box h3 {
-            font-size: 15px;
-            margin-bottom: 10px;
-        }
-
-        .outcome-box.loss h3 { color: #ff6666; }
-        .outcome-box.win-long h3 { color: #66cc66; }
-
-        .outcome-box p { font-size: 14px; color: #aaa; margin: 0; }
-
-        .verdict {
-            margin-top: 18px;
-            padding: 12px 20px;
-            background: rgba(139,0,0,0.3);
-            border: 1px solid #cc2200;
+        .img-card {
             border-radius: 6px;
-            font-size: 14px;
-            color: #ff9999;
+            overflow: hidden;
+            background: #1e1e1e;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .img-card img { width:100%; height:220px; object-fit:cover; display:block; }
+        .img-card .cap { padding: 8px 12px; font-size: 11px; color: rgba(232,224,208,0.4); font-style:italic; }
+
+        /* ---- STAT CARDS ---- */
+        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 24px 0; }
+        .stat-card {
+            background: rgba(204,34,0,0.08);
+            border: 1px solid rgba(204,34,0,0.25);
+            border-radius: 8px;
+            padding: 18px;
+            text-align: center;
+        }
+        .stat-card .num { font-family: 'Playfair Display', serif; font-size: 30px; font-weight:900; color: #e05540; display:block; }
+        .stat-card .lbl { font-size: 11px; color: rgba(232,224,208,0.5); text-transform:uppercase; letter-spacing:1px; margin-top:4px; }
+
+        /* ---- MAP ---- */
+        #map { width:100%; height:500px; border-radius:8px; border: 1px solid rgba(255,255,255,0.1); margin-top:16px; }
+
+        .map-legend { display:flex; gap:20px; margin-top:12px; flex-wrap:wrap; }
+        .leg { display:flex; align-items:center; gap:7px; font-size:12px; color:rgba(232,224,208,0.5); }
+        .leg-dot { width:8px; height:8px; border-radius:50%; }
+
+        /* ---- OUTCOMES ---- */
+        .outcome-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:20px; }
+        .o-box { padding:22px; border-radius:8px; }
+        .o-box.red { background:rgba(204,34,0,0.1); border:1px solid rgba(204,34,0,0.3); }
+        .o-box.green { background:rgba(46,107,62,0.1); border:1px solid rgba(46,107,62,0.3); }
+        .o-box h3 { font-family:'Playfair Display',serif; font-size:17px; margin-bottom:10px; }
+        .o-box.red h3 { color: #e05540; }
+        .o-box.green h3 { color: #4caf72; }
+        .o-box p { margin:0; font-size:14px; }
+
+        .verdict-box {
+            margin-top: 20px;
+            padding: 14px 22px;
+            background: rgba(200,168,75,0.08);
+            border: 1px solid rgba(200,168,75,0.3);
+            border-radius: 6px;
+            font-size: 13px;
+            color: #c8a84b;
             display: inline-block;
         }
 
+        /* ---- FOOTER ---- */
         footer {
-            text-align: center;
-            padding: 25px;
-            color: #555;
-            font-size: 13px;
-            border-top: 1px solid #222;
+            text-align:center;
+            padding:30px;
+            color:rgba(232,224,208,0.25);
+            font-size:12px;
+            letter-spacing:2px;
         }
 
-        @media (max-width: 650px) {
-            .two-col, .outcome-grid { grid-template-columns: 1fr; }
+        /* ---- SCROLL FADE ---- */
+        .fade-in { opacity:0; transform:translateY(25px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .fade-in.visible { opacity:1; transform:none; }
+
+        @media(max-width:700px) {
+            .two-col,.three-col,.outcome-grid,.stats { grid-template-columns:1fr; }
+            .img-grid.two,.img-grid.three,.img-grid.featured { grid-template-columns:1fr; }
         }
     </style>
 </head>
 <body>
 
-<div class="flag-bar">
-    <div style="background:#ce2939;"></div>
-    <div style="background:#fff;"></div>
-    <div style="background:#477050;"></div>
+<!-- HERO -->
+<div class="hero">
+    <div class="hero-eyebrow">Unit 8 · Cold War Events · Sammy</div>
+    <h1>The <span class="red">Hungarian</span><br>Revolution</h1>
+    <div class="hero-dates">October 23 – November 10, 1956</div>
+    <p class="hero-desc">A nation rises against Soviet occupation — and is crushed beneath its tanks. The story of Hungary's doomed bid for freedom.</p>
+    <div class="scroll-hint">Scroll</div>
 </div>
 
-<div class="header">
-    <div class="subtitle">Unit 8 · Cold War Events · Sammy</div>
-    <h1>The Hungarian Revolution</h1>
-    <div class="dates">October 23 – November 10, 1956</div>
-</div>
-
-<div class="flag-bar">
-    <div style="background:#ce2939;"></div>
-    <div style="background:#fff;"></div>
-    <div style="background:#477050;"></div>
-</div>
-
-<div class="container">
+<div class="page">
 
     <!-- CONTEXT -->
-    <div class="section">
-        <h2>📜 Historical Context</h2>
+    <div class="section-wrap fade-in">
+        <div class="section-label">Historical Context</div>
         <div class="two-col">
             <div>
-                <p>After World War II ended in 1945, Soviet forces occupied Hungary. Through rigged elections and political intimidation, the Hungarian Communist Party seized full control by 1949, making Hungary a Soviet satellite state — independent in name, Soviet-controlled in reality.</p>
-                <p>Stalinist leader Mátyás Rákosi ran a brutal police state. His secret police (the ÁVH) imprisoned and tortured thousands. Forced collectivization destroyed the economy and caused food shortages. Hungarians were miserable.</p>
-                <p>Stalin's death in 1953 opened a small window of hope. Khrushchev's "Secret Speech" in February 1956 — denouncing Stalin's crimes — sent a wave of optimism through Eastern Europe. If the USSR itself was changing, maybe so could Hungary.</p>
+                <h2>How Did Hungary End Up Under Soviet Control?</h2>
+                <p>After WWII ended in 1945, Soviet forces occupied Hungary. Through rigged elections and political intimidation, the Hungarian Communist Party seized full control by 1949, making Hungary a Soviet satellite state — independent in name, Soviet-controlled in reality.</p>
+                <p>Stalinist leader Mátyás Rákosi ran a brutal police state. The ÁVH (secret police) imprisoned and tortured thousands. Forced collectivization destroyed the economy. Hungarians were suffering.</p>
+                <p>Stalin's death in 1953 opened a crack of hope. Khrushchev's "Secret Speech" in February 1956 — denouncing Stalin's crimes publicly — sent a wave of optimism through Eastern Europe. If the USSR itself was criticizing Stalin, maybe real change was coming.</p>
             </div>
             <div>
-                <p style="font-size:13px;color:#f0a040;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Timeline of Background Events</p>
                 <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="year">1945</div>
-                        <p><strong>Soviet Occupation Begins</strong> — USSR troops remain after WWII</p>
+                    <div class="tl-item">
+                        <div class="tl-year">1945</div>
+                        <strong>Soviet Occupation Begins</strong>
+                        <p>USSR troops remain in Hungary after defeating Nazi Germany</p>
                     </div>
-                    <div class="timeline-item">
-                        <div class="year">1949</div>
-                        <p><strong>Hungary Becomes Satellite State</strong> — Rákosi's communist government takes full power</p>
+                    <div class="tl-item">
+                        <div class="tl-year">1949</div>
+                        <strong>Satellite State Declared</strong>
+                        <p>Rákosi's communist government takes total control</p>
                     </div>
-                    <div class="timeline-item">
-                        <div class="year">1953</div>
-                        <p><strong>Stalin Dies</strong> — Brief reform era begins, Imre Nagy becomes PM briefly</p>
+                    <div class="tl-item">
+                        <div class="tl-year">1953</div>
+                        <strong>Stalin Dies</strong>
+                        <p>Thaw begins. Imre Nagy briefly becomes Prime Minister</p>
                     </div>
-                    <div class="timeline-item">
-                        <div class="year">Feb 1956</div>
-                        <p><strong>Khrushchev's Secret Speech</strong> — Denounces Stalin, raises hopes across Eastern Europe</p>
+                    <div class="tl-item">
+                        <div class="tl-year">Feb 1956</div>
+                        <strong>Khrushchev's Secret Speech</strong>
+                        <p>Denounces Stalin — raises hopes across the Eastern Bloc</p>
                     </div>
-                    <div class="timeline-item">
-                        <div class="year">June 1956</div>
-                        <p><strong>Polish Uprising</strong> — Workers revolt in Poznań, inspires Hungarians</p>
+                    <div class="tl-item">
+                        <div class="tl-year">June 1956</div>
+                        <strong>Polish Uprising</strong>
+                        <p>Workers revolt in Poznań, Poland — Hungary is watching</p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="img-row">
-            <div class="img-box">
+        <div class="img-grid two">
+            <div class="img-card">
                 <img src="../assets/rakosi.jpg" alt="Rakosi">
-                <div class="caption">Mátyás Rákosi, Hungary's Stalinist leader</div>
+                <div class="cap">Mátyás Rákosi, Hungary's Stalinist leader</div>
             </div>
-            <div class="img-box">
-                <img src="../assets/khrushchev.jpg" alt="Khrushchev">
-                <div class="caption">Khrushchev's 1956 Secret Speech sparked hope</div>
+            <div class="img-card">
+                <img src="../assets/soviet_occupation.jpg" alt="Soviet soldiers">
+                <div class="cap">Soviet presence in postwar Eastern Europe</div>
             </div>
         </div>
     </div>
 
     <!-- EVENT DETAILS -->
-    <div class="section">
-        <h2>⚔️ Event Details</h2>
-        <p>On October 23, 1956, more than 200,000 students and workers marched in Budapest demanding democratic reforms and Soviet withdrawal. The ÁVH opened fire on them — which backfired massively. Army units defected to join the rebels. Crowds tore down Budapest's giant Stalin statue, leaving only his boots as a symbol of rejection.</p>
-        <p>Imre Nagy was reinstated as Prime Minister and on November 1 he announced Hungary would withdraw from the Warsaw Pact and become a neutral nation. This was a direct challenge to Soviet power.</p>
-        <p><strong style="color:#f0a040;">Cold War connection:</strong> The USSR couldn't let this stand — one country breaking free would inspire the entire Eastern Bloc to do the same. Meanwhile, the US had been encouraging resistance through Radio Free Europe. But Eisenhower refused to intervene militarily, partly because of the simultaneous Suez Crisis, leaving Hungary abandoned.</p>
-        <div class="img-row">
-            <div class="img-box">
-                <img src="../assets/protests.jpg" alt="Budapest protests">
-                <div class="caption">Students march in Budapest, October 23, 1956</div>
+    <div class="section-wrap fade-in">
+        <div class="section-label">Event Details</div>
+        <h2>October 23rd — The Day Hungary Rose Up</h2>
+        <p>On October 23, 1956, more than 200,000 students and workers marched through Budapest demanding democratic reforms and Soviet troop withdrawal. The ÁVH opened fire on the peaceful crowd — which backfired catastrophically. Army units defected to join the rebels. Crowds tore down Budapest's giant Stalin statue, leaving only his boots on the pedestal.</p>
+        <p>Imre Nagy was reinstated as Prime Minister. On November 1 he announced Hungary would withdraw from the Warsaw Pact and declare neutrality — a direct challenge to Soviet dominance over Eastern Europe.</p>
+        <p><strong style="color:#c8a84b;">Cold War connection:</strong> The USSR couldn't allow this. One free country would inspire the entire Eastern Bloc. Meanwhile, the US had encouraged resistance through Radio Free Europe — but Eisenhower refused to intervene militarily, leaving Hungary completely on its own.</p>
+        <div class="img-grid featured">
+            <div class="img-card">
+                <img src="../assets/protests.jpg" alt="Budapest protests" style="height:280px;">
+                <div class="cap">Students and workers march in Budapest, October 23, 1956</div>
             </div>
-            <div class="img-box">
-                <img src="../assets/stalin_statue.jpg" alt="Stalin statue">
-                <div class="caption">Stalin's statue toppled — only the boots remained</div>
-            </div>
-            <div class="img-box">
-                <img src="../assets/nagy.jpg" alt="Imre Nagy">
-                <div class="caption">Imre Nagy, reform PM who declared neutrality</div>
+            <div style="display:flex;flex-direction:column;gap:14px;">
+                <div class="img-card">
+                    <img src="../assets/stalin_statue.jpg" alt="Stalin statue down" style="height:130px;">
+                    <div class="cap">Stalin's statue torn down — only the boots remained</div>
+                </div>
+                <div class="img-card">
+                    <img src="../assets/nagy.jpg" alt="Imre Nagy" style="height:130px;">
+                    <div class="cap">Imre Nagy, the reform PM</div>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- MAP -->
-    <div class="section">
-        <h2>🗺️ Interactive Map</h2>
-        <p>Click the markers to see what happened at each location.</p>
+    <div class="section-wrap fade-in">
+        <div class="section-label">Interactive Map</div>
+        <h2>Where It All Happened</h2>
+        <p>Click any marker to explore the key locations of the revolution.</p>
         <div id="map"></div>
+        <div class="map-legend">
+            <div class="leg"><div class="leg-dot" style="background:#cc2200;"></div> Battle sites</div>
+            <div class="leg"><div class="leg-dot" style="background:#c8a84b;"></div> Political locations</div>
+            <div class="leg"><div class="leg-dot" style="background:#336633;"></div> Soviet entry points</div>
+        </div>
     </div>
 
     <!-- OUTCOME -->
-    <div class="section">
-        <h2>📌 Outcome</h2>
-        <p>On November 4, 1956, the USSR launched "Operation Whirlwind." Over 1,000 tanks and 150,000 soldiers stormed Budapest. The revolution was crushed in about a week. Imre Nagy fled to the Yugoslav embassy but was lured out, arrested, secretly tried, and executed in 1958.</p>
+    <div class="section-wrap fade-in">
+        <div class="section-label">Outcomes</div>
+        <h2>Operation Whirlwind — The End</h2>
+
+        <div class="stats">
+            <div class="stat-card"><span class="num">1,000+</span><span class="lbl">Soviet tanks</span></div>
+            <div class="stat-card"><span class="num">~2,700</span><span class="lbl">Hungarians killed</span></div>
+            <div class="stat-card"><span class="num">200k</span><span class="lbl">refugees fled West</span></div>
+            <div class="stat-card"><span class="num">350</span><span class="lbl">executed after</span></div>
+        </div>
+
+        <p>On November 4, 1956 the USSR launched Operation Whirlwind. Over 1,000 tanks flooded Budapest. The revolution was crushed within a week. Imre Nagy was lured from asylum and secretly tried — executed in 1958.</p>
+
         <div class="outcome-grid">
-            <div class="outcome-box loss">
-                <h3>⚔ Short Term: Brutal Defeat</h3>
-                <p>~2,500–3,000 Hungarians killed. 200,000+ fled as refugees. 20,000 arrested, 350 executed including Nagy. Hungary stayed Soviet.</p>
+            <div class="o-box red">
+                <h3>⚔ Short-Term: Crushing Defeat</h3>
+                <p>Hungary remained a Soviet satellite. The revolution was completely suppressed. Thousands killed, hundreds executed, 200,000 fled the country forever.</p>
             </div>
-            <div class="outcome-box win-long">
-                <h3>🕊 Long Term: Moral Victory</h3>
-                <p>Exposed Soviet brutality globally. Proved US "rollback" was empty rhetoric. Inspired future resistance — Hungary finally broke free in 1989.</p>
+            <div class="o-box green">
+                <h3>🕊 Long-Term: A Lasting Legacy</h3>
+                <p>Soviet brutality was exposed globally. The event proved US "rollback" rhetoric was hollow. Hungary's memory of 1956 powered the peaceful revolution that finally freed them in 1989.</p>
             </div>
         </div>
-        <div class="verdict">⭐ Verdict: Short-term win for Communism — long-term damage to Soviet credibility</div>
-        <div class="img-row">
-            <div class="img-box">
+
+        <div class="verdict-box">⭐ Verdict: Short-term victory for Communism — long-term moral defeat for the Soviet Union</div>
+
+        <div class="img-grid two">
+            <div class="img-card">
                 <img src="../assets/tanks.jpg" alt="Soviet tanks">
-                <div class="caption">Soviet T-54 tanks in Budapest streets, November 1956</div>
+                <div class="cap">Soviet T-54 tanks in Budapest, November 4, 1956</div>
             </div>
-            <div class="img-box">
+            <div class="img-card">
                 <img src="../assets/refugees.jpg" alt="Refugees">
-                <div class="caption">200,000 Hungarians fled West after the crackdown</div>
+                <div class="cap">200,000 Hungarians fled to the West</div>
             </div>
         </div>
     </div>
 
 </div>
 
-<footer>
-    Hungarian Revolution 1956 &nbsp;·&nbsp; Unit 8: Events of the Cold War &nbsp;·&nbsp; Sammy
-</footer>
+<footer>Hungarian Revolution 1956 &nbsp;·&nbsp; Unit 8: Cold War Events &nbsp;·&nbsp; Sammy</footer>
 
 <script>
-    // map setup
-    var map = L.map('map').setView([47.5, 19.05], 7);
+// scroll fade
+const faders = document.querySelectorAll('.fade-in');
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+faders.forEach(f => observer.observe(f));
 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        attribution: '© OpenStreetMap © CARTO'
-    }).addTo(map);
+// map
+const map = L.map('map', { scrollWheelZoom: false }).setView([47.5, 19.05], 7);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    attribution: '© OpenStreetMap © CARTO'
+}).addTo(map);
 
-    // locations
-    var locations = [
-        { lat: 47.4979, lng: 19.0402, color: 'red', title: 'Parliament Building', desc: 'Bloody Thursday - Oct 25. Soviet and secret police fired on peaceful protesters, killing 100+. This turned the protest into a full armed uprising.' },
-        { lat: 47.492, lng: 19.055, color: 'red', title: 'Hungarian Radio HQ', desc: 'Where the revolution actually started. Students tried to broadcast their demands, got shot at, stormed the building. First shots of the revolution.' },
-        { lat: 47.4877, lng: 19.0747, color: 'orange', title: 'Stalin Statue (Városliget)', desc: 'Crowds tore down the huge Stalin statue on Oct 23. Left only his boots. Became the iconic image of the whole revolution.' },
-        { lat: 47.44, lng: 19.008, color: 'red', title: 'Corvin Cinema - Rebel Stronghold', desc: 'Young rebels (some only 13 years old) used this area to ambush Soviet tanks. Destroyed dozens of tanks before being overwhelmed Nov 8.' },
-        { lat: 47.50, lng: 19.14, color: 'green', title: 'Soviet Entry Point (East Budapest)', desc: 'Where Soviet columns entered Budapest on November 4 to launch Operation Whirlwind. 1000+ tanks, 150,000 troops.' },
-    ];
-
-    locations.forEach(function(loc) {
-        var circleColor = loc.color === 'red' ? '#cc2200' : loc.color === 'orange' ? '#f0a040' : '#336633';
-        var marker = L.circleMarker([loc.lat, loc.lng], {
-            radius: 10,
-            fillColor: circleColor,
-            color: '#fff',
-            weight: 2,
-            fillOpacity: 0.9
-        }).addTo(map);
-        marker.bindPopup('<strong>' + loc.title + '</strong><br><br>' + loc.desc);
+function mkIcon(color, r=9) {
+    return L.divIcon({
+        html: `<div style="width:${r*2}px;height:${r*2}px;border-radius:50%;background:${color};border:2px solid rgba(255,255,255,0.7);box-shadow:0 0 10px ${color}99;"></div>`,
+        iconSize:[r*2,r*2], iconAnchor:[r,r], className:''
     });
-</script>
+}
 
+const pts = [
+    [47.4979, 19.0402, '#cc2200', 'Parliament Building', 'Oct 25 — "Bloody Thursday." Soviet & ÁVH forces fired on peaceful protesters killing 100+. Turned the protest into a full armed revolution.'],
+    [47.492, 19.055, '#cc2200', 'Hungarian Radio HQ', 'The revolution started here Oct 23. Students tried to broadcast demands — got shot at — stormed the building. First shots fired.'],
+    [47.4877, 19.0747, '#c8a84b', 'Stalin Statue (Városliget)', 'Crowds tore down the massive Stalin statue Oct 23. Left only his boots. Most iconic image of the revolution.'],
+    [47.4884, 19.0634, '#c8a84b', 'Hungarian Parliament', 'Imre Nagy announced withdrawal from the Warsaw Pact from here on Nov 1. Days later Soviet tanks surrounded it.'],
+    [47.44, 19.008, '#cc2200', 'Corvin Cinema — Rebel Stronghold', 'Young rebels, some just 13, used narrow alleyways to ambush Soviet tanks. Destroyed dozens before being overwhelmed Nov 8.'],
+    [47.50, 19.14, '#336633', 'Soviet Entry — East Budapest', 'Soviet columns entered here Nov 4. Operation Whirlwind. 1,000+ tanks. Revolution crushed within days.'],
+    [48.15, 17.11, '#336633', 'Bratislava — Soviet Staging', 'Soviet troops moved through Czechoslovakia to reinforce the crackdown in Hungary.'],
+];
+
+pts.forEach(([lat, lng, col, title, desc]) => {
+    L.marker([lat, lng], { icon: mkIcon(col) })
+        .bindPopup(`<div style="font-family:Lato,sans-serif;max-width:240px;"><strong style="color:#1a0000;font-size:13px;">${title}</strong><p style="margin-top:7px;font-size:12px;color:#333;line-height:1.5;">${desc}</p></div>`)
+        .addTo(map);
+});
+</script>
 </body>
 </html>
