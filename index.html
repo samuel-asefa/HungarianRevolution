@@ -1,77 +1,221 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Hungarian Revolution - Cold War Project</title>
+    <title>Hungarian Revolution 1956 - Cold War Project</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: white;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
-        h1 {
-            color: darkred;
+
+        body {
+            font-family: Georgia, serif;
+            background-color: #1a1a1a;
+            color: #eee;
+        }
+
+        /* header at the top */
+        .header {
+            background-color: #8b0000;
+            padding: 40px 20px;
             text-align: center;
         }
-        h2 {
-            color: #333;
-            border-bottom: 2px solid darkred;
+
+        .header h1 {
+            font-size: 48px;
+            color: white;
+            margin-bottom: 10px;
         }
+
+        .header p {
+            color: #ffcc88;
+            font-size: 16px;
+        }
+
+        /* main content */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
         .section {
-            margin-bottom: 30px;
-            padding: 15px;
-            border: 1px solid #ccc;
+            background: #2a2a2a;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-left: 4px solid #8b0000;
         }
-        img {
-            width: 400px;
-            height: auto;
+
+        .section h2 {
+            font-size: 24px;
+            color: #ffaa44;
+            margin-bottom: 15px;
         }
+
+        .section p {
+            line-height: 1.7;
+            color: #ccc;
+            margin-bottom: 12px;
+            font-size: 15px;
+        }
+
+        /* images */
         .img-row {
             display: flex;
-            gap: 10px;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .img-box {
+            flex: 1;
+            min-width: 200px;
+            background: #333;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid #555;
+        }
+
+        .img-box img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .img-box .caption {
+            padding: 8px 10px;
+            font-size: 12px;
+            color: #aaa;
+            text-align: center;
+            font-style: italic;
+        }
+
+        /* flag colors in header */
+        .flag-bar {
+            display: flex;
+            height: 6px;
+        }
+        .flag-bar div {
+            flex: 1;
+        }
+
+        /* outcome badges */
+        .outcome-result {
+            display: inline-block;
+            background: #8b0000;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 13px;
+            border-top: 1px solid #333;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
 
-    <h1>Hungarian Revolution (1956)</h1>
-    <p style="text-align:center;">Cold War Infographic</p>
+    <!-- hungarian flag colors -->
+    <div class="flag-bar">
+        <div style="background:#ce2939;"></div>
+        <div style="background:#ffffff;"></div>
+        <div style="background:#477050;"></div>
+    </div>
 
-    <div class="section">
-        <h2>Historical Context</h2>
-        <p>After World War 2, the Soviet Union took control of Hungary and made it a communist satellite state. Hungary was ruled by a harsh Stalinist leader named Mátyás Rákosi. The secret police (called the ÁVH) arrested and tortured a lot of people. Hungarians were really unhappy.</p>
-        <p>When Stalin died in 1953 things started to slowly change. In 1956 Khrushchev gave a speech criticizing Stalin which gave people hope that maybe the USSR was changing.</p>
-        <div class="img-row">
-            <img src="../assets/placeholder1.jpg" alt="Soviet occupation">
-            <img src="../assets/placeholder2.jpg" alt="Rakosi">
+    <div class="header">
+        <h1>The Hungarian Revolution</h1>
+        <p>October 23 – November 10, 1956 &nbsp;|&nbsp; Cold War Project &nbsp;|&nbsp; Sammy</p>
+    </div>
+
+    <div class="flag-bar">
+        <div style="background:#ce2939;"></div>
+        <div style="background:#ffffff;"></div>
+        <div style="background:#477050;"></div>
+    </div>
+
+    <div class="container">
+
+        <div class="section">
+            <h2>📜 Historical Context</h2>
+            <p>After World War II ended in 1945, the Soviet Union occupied Hungary and gradually forced a communist government into power. By 1949 Hungary was officially a Soviet satellite state — independent on paper but really controlled by Moscow.</p>
+            <p>The leader Mátyás Rákosi ran the country like a police state. His secret police force (the ÁVH) arrested thousands of people, and the economy was forced into Soviet-style collectivization which made life really hard for everyday Hungarians.</p>
+            <p>Things started shifting when Stalin died in 1953. In February 1956 the new Soviet leader Nikita Khrushchev gave his famous "Secret Speech" denouncing Stalin's crimes. This gave Hungarians hope that maybe real change was possible — and set the stage for the revolution later that year.</p>
+
+            <div class="img-row">
+                <div class="img-box">
+                    <img src="../assets/rakosi.jpg" alt="Rakosi">
+                    <div class="caption">Mátyás Rákosi, Hungary's Stalinist leader</div>
+                </div>
+                <div class="img-box">
+                    <img src="../assets/soviet_occupation.jpg" alt="Soviet occupation">
+                    <div class="caption">Soviet presence in postwar Eastern Europe</div>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div class="section">
-        <h2>Event Details</h2>
-        <p>On October 23 1956 students and workers marched in Budapest demanding freedom and for Soviet troops to leave. The secret police shot at them which made things way worse. People started fighting back and it turned into a full revolution.</p>
-        <p>Imre Nagy became the new prime minister and said Hungary would leave the Warsaw Pact. That was a big deal because it meant Hungary wanted to be neutral and not under Soviet control anymore.</p>
-        <p>The US had been encouraging eastern europeans to resist communism through Radio Free Europe but when the revolution actually happened they didn't send any help which was kind of a betrayal.</p>
-        <div class="img-row">
-            <img src="../assets/placeholder3.jpg" alt="protests">
-            <img src="../assets/placeholder4.jpg" alt="Nagy">
+        <div class="section">
+            <h2>⚔️ Event Details</h2>
+            <p>On October 23, 1956 more than 200,000 students and workers marched through Budapest demanding democratic reforms and the withdrawal of Soviet troops. The protest turned violent when the ÁVH opened fire on the crowd. Rebels fought back and army units actually defected to join the uprising.</p>
+            <p>Imre Nagy was brought back as Prime Minister. He announced that Hungary would leave the Warsaw Pact and become a neutral country — this was essentially telling the Soviet Union that Hungary was done being their satellite.</p>
+            <p>This connects to the Cold War because the USSR needed to maintain control over Eastern Europe — letting one country go free would encourage others to do the same. The US had been saying they supported freedom in Eastern Europe through Radio Free Europe, but when the revolution actually happened Eisenhower refused to send military help. Hungary was on its own.</p>
+
+            <div class="img-row">
+                <div class="img-box">
+                    <img src="../assets/protests.jpg" alt="Protests in Budapest">
+                    <div class="caption">Students marching in Budapest, October 23</div>
+                </div>
+                <div class="img-box">
+                    <img src="../assets/stalin_statue.jpg" alt="Stalin statue torn down">
+                    <div class="caption">The Stalin statue being torn down</div>
+                </div>
+                <div class="img-box">
+                    <img src="../assets/nagy.jpg" alt="Imre Nagy">
+                    <div class="caption">Imre Nagy, reform Prime Minister</div>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div class="section">
-        <h2>Outcome</h2>
-        <p>On November 4 the USSR sent over 1000 tanks into Budapest and crushed the revolution. About 2500-3000 Hungarians died. 200,000 people fled to the west as refugees. Imre Nagy was arrested and later executed in 1958.</p>
-        <p>This was a win for Communism in the short term but it made the USSR look really bad to the rest of the world.</p>
-        <div class="img-row">
-            <img src="../assets/placeholder5.jpg" alt="tanks">
-            <img src="../assets/placeholder6.jpg" alt="refugees">
+        <div class="section">
+            <h2>📌 Outcome</h2>
+            <p>On November 4, 1956 the USSR launched "Operation Whirlwind" — over 1,000 tanks and 150,000 troops flooded into Budapest. The revolution was crushed within about a week.</p>
+            <p>The human cost was devastating. Around 2,500–3,000 Hungarians were killed. Over 200,000 fled to the west as refugees. More than 20,000 were arrested and 350 executed, including Imre Nagy who was secretly tried and hanged in 1958.</p>
+            <p>In the short term this was a clear win for the Soviet Union and communism. But it seriously damaged the USSR's image globally and proved that their "peaceful coexistence" talk was just words. It also showed that US promises of supporting freedom fighters were hollow.</p>
+
+            <div class="outcome-result">Result: Short-term victory for Communism</div>
+
+            <div class="img-row">
+                <div class="img-box">
+                    <img src="../assets/tanks.jpg" alt="Soviet tanks">
+                    <div class="caption">Soviet tanks in the streets of Budapest, November 1956</div>
+                </div>
+                <div class="img-box">
+                    <img src="../assets/refugees.jpg" alt="Hungarian refugees">
+                    <div class="caption">200,000 Hungarians fled to the West</div>
+                </div>
+            </div>
         </div>
+
+        <div class="section">
+            <h2>🗺️ Map</h2>
+            <p>Key locations of the Hungarian Revolution:</p>
+            <img src="../assets/hungary_map.jpg" alt="Map of Hungary showing key locations" style="width:100%;border-radius:6px;margin-top:15px;">
+        </div>
+
     </div>
 
-    <div class="section">
-        <h2>Map</h2>
-        <p>Map goes here - need to add this still</p>
-        <img src="../assets/map.jpg" alt="map of Hungary" style="width:600px;">
-    </div>
+    <footer>
+        Hungarian Revolution 1956 &nbsp;·&nbsp; Unit 8: Events of the Cold War &nbsp;·&nbsp; Sammy
+    </footer>
 
 </body>
 </html>
