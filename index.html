@@ -2,6 +2,8 @@
 <html>
 <head>
     <title>Hungarian Revolution 1956 - Cold War Project</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -11,72 +13,134 @@
 
         body {
             font-family: Georgia, serif;
-            background-color: #1a1a1a;
+            background-color: #111;
             color: #eee;
         }
 
-        /* header at the top */
+        .flag-bar {
+            display: flex;
+            height: 8px;
+        }
+        .flag-bar div { flex: 1; }
+
         .header {
-            background-color: #8b0000;
-            padding: 40px 20px;
+            background: linear-gradient(135deg, #6b0000, #8b0000);
+            padding: 50px 20px;
             text-align: center;
         }
 
         .header h1 {
-            font-size: 48px;
+            font-size: 52px;
             color: white;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
         }
 
-        .header p {
+        .header .subtitle {
             color: #ffcc88;
-            font-size: 16px;
+            font-size: 15px;
+            letter-spacing: 2px;
         }
 
-        /* main content */
+        .header .dates {
+            font-size: 22px;
+            color: #ffd080;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
         .container {
-            max-width: 1000px;
+            max-width: 1050px;
             margin: 0 auto;
-            padding: 30px 20px;
+            padding: 35px 20px;
         }
 
+        /* section styling */
         .section {
-            background: #2a2a2a;
-            border-radius: 8px;
-            padding: 25px;
-            margin-bottom: 25px;
-            border-left: 4px solid #8b0000;
+            background: #1e1e1e;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 28px;
+            border-left: 5px solid #cc2200;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
 
         .section h2 {
-            font-size: 24px;
-            color: #ffaa44;
-            margin-bottom: 15px;
+            font-size: 26px;
+            color: #f0a040;
+            margin-bottom: 18px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #333;
         }
 
         .section p {
-            line-height: 1.7;
+            line-height: 1.75;
             color: #ccc;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
             font-size: 15px;
+        }
+
+        /* timeline */
+        .timeline {
+            position: relative;
+            margin: 20px 0;
+            padding-left: 30px;
+            border-left: 2px solid #cc2200;
+        }
+
+        .timeline-item {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -37px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            background: #cc2200;
+            border-radius: 50%;
+            border: 2px solid #f0a040;
+        }
+
+        .timeline-item .year {
+            color: #f0a040;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+
+        .timeline-item p {
+            margin: 0;
+            font-size: 14px;
+            color: #bbb;
+        }
+
+        .timeline-item strong {
+            color: #eee;
         }
 
         /* images */
         .img-row {
             display: flex;
             gap: 15px;
-            margin-top: 20px;
+            margin-top: 22px;
             flex-wrap: wrap;
         }
 
         .img-box {
             flex: 1;
-            min-width: 200px;
-            background: #333;
-            border-radius: 6px;
+            min-width: 180px;
+            background: #2a2a2a;
+            border-radius: 8px;
             overflow: hidden;
-            border: 1px solid #555;
+            border: 1px solid #444;
+            transition: transform 0.2s;
         }
+
+        .img-box:hover { transform: scale(1.02); }
 
         .img-box img {
             width: 100%;
@@ -86,136 +150,246 @@
         }
 
         .img-box .caption {
-            padding: 8px 10px;
+            padding: 8px 12px;
             font-size: 12px;
-            color: #aaa;
-            text-align: center;
+            color: #999;
             font-style: italic;
         }
 
-        /* flag colors in header */
-        .flag-bar {
-            display: flex;
-            height: 6px;
-        }
-        .flag-bar div {
-            flex: 1;
+        /* two column layout */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: start;
         }
 
-        /* outcome badges */
-        .outcome-result {
-            display: inline-block;
-            background: #8b0000;
-            color: white;
-            padding: 8px 18px;
-            border-radius: 4px;
+        /* map */
+        #map {
+            width: 100%;
+            height: 480px;
+            border-radius: 8px;
+            border: 1px solid #444;
+            margin-top: 15px;
+        }
+
+        /* outcome boxes */
+        .outcome-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .outcome-box {
+            padding: 18px;
+            border-radius: 8px;
+        }
+
+        .outcome-box.loss {
+            background: rgba(139,0,0,0.2);
+            border: 1px solid #8b0000;
+        }
+
+        .outcome-box.win-long {
+            background: rgba(0,100,0,0.15);
+            border: 1px solid #336633;
+        }
+
+        .outcome-box h3 {
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+
+        .outcome-box.loss h3 { color: #ff6666; }
+        .outcome-box.win-long h3 { color: #66cc66; }
+
+        .outcome-box p { font-size: 14px; color: #aaa; margin: 0; }
+
+        .verdict {
+            margin-top: 18px;
+            padding: 12px 20px;
+            background: rgba(139,0,0,0.3);
+            border: 1px solid #cc2200;
+            border-radius: 6px;
             font-size: 14px;
-            margin-top: 10px;
+            color: #ff9999;
+            display: inline-block;
         }
 
         footer {
             text-align: center;
-            padding: 20px;
-            color: #666;
+            padding: 25px;
+            color: #555;
             font-size: 13px;
-            border-top: 1px solid #333;
-            margin-top: 20px;
+            border-top: 1px solid #222;
+        }
+
+        @media (max-width: 650px) {
+            .two-col, .outcome-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <!-- hungarian flag colors -->
-    <div class="flag-bar">
-        <div style="background:#ce2939;"></div>
-        <div style="background:#ffffff;"></div>
-        <div style="background:#477050;"></div>
-    </div>
+<div class="flag-bar">
+    <div style="background:#ce2939;"></div>
+    <div style="background:#fff;"></div>
+    <div style="background:#477050;"></div>
+</div>
 
-    <div class="header">
-        <h1>The Hungarian Revolution</h1>
-        <p>October 23 – November 10, 1956 &nbsp;|&nbsp; Cold War Project &nbsp;|&nbsp; Sammy</p>
-    </div>
+<div class="header">
+    <div class="subtitle">Unit 8 · Cold War Events · Sammy</div>
+    <h1>The Hungarian Revolution</h1>
+    <div class="dates">October 23 – November 10, 1956</div>
+</div>
 
-    <div class="flag-bar">
-        <div style="background:#ce2939;"></div>
-        <div style="background:#ffffff;"></div>
-        <div style="background:#477050;"></div>
-    </div>
+<div class="flag-bar">
+    <div style="background:#ce2939;"></div>
+    <div style="background:#fff;"></div>
+    <div style="background:#477050;"></div>
+</div>
 
-    <div class="container">
+<div class="container">
 
-        <div class="section">
-            <h2>📜 Historical Context</h2>
-            <p>After World War II ended in 1945, the Soviet Union occupied Hungary and gradually forced a communist government into power. By 1949 Hungary was officially a Soviet satellite state — independent on paper but really controlled by Moscow.</p>
-            <p>The leader Mátyás Rákosi ran the country like a police state. His secret police force (the ÁVH) arrested thousands of people, and the economy was forced into Soviet-style collectivization which made life really hard for everyday Hungarians.</p>
-            <p>Things started shifting when Stalin died in 1953. In February 1956 the new Soviet leader Nikita Khrushchev gave his famous "Secret Speech" denouncing Stalin's crimes. This gave Hungarians hope that maybe real change was possible — and set the stage for the revolution later that year.</p>
-
-            <div class="img-row">
-                <div class="img-box">
-                    <img src="../assets/rakosi.jpg" alt="Rakosi">
-                    <div class="caption">Mátyás Rákosi, Hungary's Stalinist leader</div>
-                </div>
-                <div class="img-box">
-                    <img src="../assets/soviet_occupation.jpg" alt="Soviet occupation">
-                    <div class="caption">Soviet presence in postwar Eastern Europe</div>
+    <!-- CONTEXT -->
+    <div class="section">
+        <h2>📜 Historical Context</h2>
+        <div class="two-col">
+            <div>
+                <p>After World War II ended in 1945, Soviet forces occupied Hungary. Through rigged elections and political intimidation, the Hungarian Communist Party seized full control by 1949, making Hungary a Soviet satellite state — independent in name, Soviet-controlled in reality.</p>
+                <p>Stalinist leader Mátyás Rákosi ran a brutal police state. His secret police (the ÁVH) imprisoned and tortured thousands. Forced collectivization destroyed the economy and caused food shortages. Hungarians were miserable.</p>
+                <p>Stalin's death in 1953 opened a small window of hope. Khrushchev's "Secret Speech" in February 1956 — denouncing Stalin's crimes — sent a wave of optimism through Eastern Europe. If the USSR itself was changing, maybe so could Hungary.</p>
+            </div>
+            <div>
+                <p style="font-size:13px;color:#f0a040;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Timeline of Background Events</p>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="year">1945</div>
+                        <p><strong>Soviet Occupation Begins</strong> — USSR troops remain after WWII</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="year">1949</div>
+                        <p><strong>Hungary Becomes Satellite State</strong> — Rákosi's communist government takes full power</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="year">1953</div>
+                        <p><strong>Stalin Dies</strong> — Brief reform era begins, Imre Nagy becomes PM briefly</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="year">Feb 1956</div>
+                        <p><strong>Khrushchev's Secret Speech</strong> — Denounces Stalin, raises hopes across Eastern Europe</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="year">June 1956</div>
+                        <p><strong>Polish Uprising</strong> — Workers revolt in Poznań, inspires Hungarians</p>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div class="section">
-            <h2>⚔️ Event Details</h2>
-            <p>On October 23, 1956 more than 200,000 students and workers marched through Budapest demanding democratic reforms and the withdrawal of Soviet troops. The protest turned violent when the ÁVH opened fire on the crowd. Rebels fought back and army units actually defected to join the uprising.</p>
-            <p>Imre Nagy was brought back as Prime Minister. He announced that Hungary would leave the Warsaw Pact and become a neutral country — this was essentially telling the Soviet Union that Hungary was done being their satellite.</p>
-            <p>This connects to the Cold War because the USSR needed to maintain control over Eastern Europe — letting one country go free would encourage others to do the same. The US had been saying they supported freedom in Eastern Europe through Radio Free Europe, but when the revolution actually happened Eisenhower refused to send military help. Hungary was on its own.</p>
-
-            <div class="img-row">
-                <div class="img-box">
-                    <img src="../assets/protests.jpg" alt="Protests in Budapest">
-                    <div class="caption">Students marching in Budapest, October 23</div>
-                </div>
-                <div class="img-box">
-                    <img src="../assets/stalin_statue.jpg" alt="Stalin statue torn down">
-                    <div class="caption">The Stalin statue being torn down</div>
-                </div>
-                <div class="img-box">
-                    <img src="../assets/nagy.jpg" alt="Imre Nagy">
-                    <div class="caption">Imre Nagy, reform Prime Minister</div>
-                </div>
+        <div class="img-row">
+            <div class="img-box">
+                <img src="../assets/rakosi.jpg" alt="Rakosi">
+                <div class="caption">Mátyás Rákosi, Hungary's Stalinist leader</div>
+            </div>
+            <div class="img-box">
+                <img src="../assets/khrushchev.jpg" alt="Khrushchev">
+                <div class="caption">Khrushchev's 1956 Secret Speech sparked hope</div>
             </div>
         </div>
-
-        <div class="section">
-            <h2>📌 Outcome</h2>
-            <p>On November 4, 1956 the USSR launched "Operation Whirlwind" — over 1,000 tanks and 150,000 troops flooded into Budapest. The revolution was crushed within about a week.</p>
-            <p>The human cost was devastating. Around 2,500–3,000 Hungarians were killed. Over 200,000 fled to the west as refugees. More than 20,000 were arrested and 350 executed, including Imre Nagy who was secretly tried and hanged in 1958.</p>
-            <p>In the short term this was a clear win for the Soviet Union and communism. But it seriously damaged the USSR's image globally and proved that their "peaceful coexistence" talk was just words. It also showed that US promises of supporting freedom fighters were hollow.</p>
-
-            <div class="outcome-result">Result: Short-term victory for Communism</div>
-
-            <div class="img-row">
-                <div class="img-box">
-                    <img src="../assets/tanks.jpg" alt="Soviet tanks">
-                    <div class="caption">Soviet tanks in the streets of Budapest, November 1956</div>
-                </div>
-                <div class="img-box">
-                    <img src="../assets/refugees.jpg" alt="Hungarian refugees">
-                    <div class="caption">200,000 Hungarians fled to the West</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>🗺️ Map</h2>
-            <p>Key locations of the Hungarian Revolution:</p>
-            <img src="../assets/hungary_map.jpg" alt="Map of Hungary showing key locations" style="width:100%;border-radius:6px;margin-top:15px;">
-        </div>
-
     </div>
 
-    <footer>
-        Hungarian Revolution 1956 &nbsp;·&nbsp; Unit 8: Events of the Cold War &nbsp;·&nbsp; Sammy
-    </footer>
+    <!-- EVENT DETAILS -->
+    <div class="section">
+        <h2>⚔️ Event Details</h2>
+        <p>On October 23, 1956, more than 200,000 students and workers marched in Budapest demanding democratic reforms and Soviet withdrawal. The ÁVH opened fire on them — which backfired massively. Army units defected to join the rebels. Crowds tore down Budapest's giant Stalin statue, leaving only his boots as a symbol of rejection.</p>
+        <p>Imre Nagy was reinstated as Prime Minister and on November 1 he announced Hungary would withdraw from the Warsaw Pact and become a neutral nation. This was a direct challenge to Soviet power.</p>
+        <p><strong style="color:#f0a040;">Cold War connection:</strong> The USSR couldn't let this stand — one country breaking free would inspire the entire Eastern Bloc to do the same. Meanwhile, the US had been encouraging resistance through Radio Free Europe. But Eisenhower refused to intervene militarily, partly because of the simultaneous Suez Crisis, leaving Hungary abandoned.</p>
+        <div class="img-row">
+            <div class="img-box">
+                <img src="../assets/protests.jpg" alt="Budapest protests">
+                <div class="caption">Students march in Budapest, October 23, 1956</div>
+            </div>
+            <div class="img-box">
+                <img src="../assets/stalin_statue.jpg" alt="Stalin statue">
+                <div class="caption">Stalin's statue toppled — only the boots remained</div>
+            </div>
+            <div class="img-box">
+                <img src="../assets/nagy.jpg" alt="Imre Nagy">
+                <div class="caption">Imre Nagy, reform PM who declared neutrality</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAP -->
+    <div class="section">
+        <h2>🗺️ Interactive Map</h2>
+        <p>Click the markers to see what happened at each location.</p>
+        <div id="map"></div>
+    </div>
+
+    <!-- OUTCOME -->
+    <div class="section">
+        <h2>📌 Outcome</h2>
+        <p>On November 4, 1956, the USSR launched "Operation Whirlwind." Over 1,000 tanks and 150,000 soldiers stormed Budapest. The revolution was crushed in about a week. Imre Nagy fled to the Yugoslav embassy but was lured out, arrested, secretly tried, and executed in 1958.</p>
+        <div class="outcome-grid">
+            <div class="outcome-box loss">
+                <h3>⚔ Short Term: Brutal Defeat</h3>
+                <p>~2,500–3,000 Hungarians killed. 200,000+ fled as refugees. 20,000 arrested, 350 executed including Nagy. Hungary stayed Soviet.</p>
+            </div>
+            <div class="outcome-box win-long">
+                <h3>🕊 Long Term: Moral Victory</h3>
+                <p>Exposed Soviet brutality globally. Proved US "rollback" was empty rhetoric. Inspired future resistance — Hungary finally broke free in 1989.</p>
+            </div>
+        </div>
+        <div class="verdict">⭐ Verdict: Short-term win for Communism — long-term damage to Soviet credibility</div>
+        <div class="img-row">
+            <div class="img-box">
+                <img src="../assets/tanks.jpg" alt="Soviet tanks">
+                <div class="caption">Soviet T-54 tanks in Budapest streets, November 1956</div>
+            </div>
+            <div class="img-box">
+                <img src="../assets/refugees.jpg" alt="Refugees">
+                <div class="caption">200,000 Hungarians fled West after the crackdown</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    Hungarian Revolution 1956 &nbsp;·&nbsp; Unit 8: Events of the Cold War &nbsp;·&nbsp; Sammy
+</footer>
+
+<script>
+    // map setup
+    var map = L.map('map').setView([47.5, 19.05], 7);
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        attribution: '© OpenStreetMap © CARTO'
+    }).addTo(map);
+
+    // locations
+    var locations = [
+        { lat: 47.4979, lng: 19.0402, color: 'red', title: 'Parliament Building', desc: 'Bloody Thursday - Oct 25. Soviet and secret police fired on peaceful protesters, killing 100+. This turned the protest into a full armed uprising.' },
+        { lat: 47.492, lng: 19.055, color: 'red', title: 'Hungarian Radio HQ', desc: 'Where the revolution actually started. Students tried to broadcast their demands, got shot at, stormed the building. First shots of the revolution.' },
+        { lat: 47.4877, lng: 19.0747, color: 'orange', title: 'Stalin Statue (Városliget)', desc: 'Crowds tore down the huge Stalin statue on Oct 23. Left only his boots. Became the iconic image of the whole revolution.' },
+        { lat: 47.44, lng: 19.008, color: 'red', title: 'Corvin Cinema - Rebel Stronghold', desc: 'Young rebels (some only 13 years old) used this area to ambush Soviet tanks. Destroyed dozens of tanks before being overwhelmed Nov 8.' },
+        { lat: 47.50, lng: 19.14, color: 'green', title: 'Soviet Entry Point (East Budapest)', desc: 'Where Soviet columns entered Budapest on November 4 to launch Operation Whirlwind. 1000+ tanks, 150,000 troops.' },
+    ];
+
+    locations.forEach(function(loc) {
+        var circleColor = loc.color === 'red' ? '#cc2200' : loc.color === 'orange' ? '#f0a040' : '#336633';
+        var marker = L.circleMarker([loc.lat, loc.lng], {
+            radius: 10,
+            fillColor: circleColor,
+            color: '#fff',
+            weight: 2,
+            fillOpacity: 0.9
+        }).addTo(map);
+        marker.bindPopup('<strong>' + loc.title + '</strong><br><br>' + loc.desc);
+    });
+</script>
 
 </body>
 </html>
