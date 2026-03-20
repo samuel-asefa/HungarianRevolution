@@ -351,6 +351,74 @@
     .context-grid, .event-cards, .outcome-strip, .stats-row { grid-template-columns: 1fr; }
     .img-grid.two, .img-grid.three, .img-grid.featured { grid-template-columns: 1fr; }
   }
+
+  /* ===================== IMAGE MODAL ===================== */
+  .img-card img { cursor: zoom-in; }
+
+  #img-modal {
+    display: none;
+    position: fixed; inset: 0; z-index: 9999;
+    background: rgba(10, 7, 2, 0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    animation: modalFadeIn 0.2s ease;
+  }
+  #img-modal.open { display: flex; }
+
+  @keyframes modalFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  #img-modal-inner {
+    position: relative;
+    max-width: 900px;
+    width: 100%;
+    animation: modalSlideUp 0.25s ease;
+  }
+
+  @keyframes modalSlideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+  }
+
+  #img-modal-inner img {
+    width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    display: block;
+    border-radius: 4px;
+    border: 1px solid rgba(200,168,75,0.2);
+  }
+
+  #img-modal-cap {
+    margin-top: 0.75rem;
+    font-size: 0.78rem;
+    font-style: italic;
+    color: rgba(245,240,232,0.45);
+    text-align: center;
+    letter-spacing: 0.05em;
+  }
+
+  #img-modal-close {
+    position: absolute;
+    top: -1rem;
+    right: -1rem;
+    width: 2.2rem; height: 2.2rem;
+    border-radius: 50%;
+    background: rgba(200,168,75,0.15);
+    border: 1px solid rgba(200,168,75,0.4);
+    color: var(--gold);
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  #img-modal-close:hover { background: rgba(200,168,75,0.3); }
 </style>
 </head>
 <body>
@@ -573,7 +641,48 @@
   <div class="student-info"><strong>Theme</strong>Governance (GOV)</div>
 </div>
 
+<!-- ===== IMAGE MODAL ===== -->
+<div id="img-modal" onclick="closeModal(event)">
+  <div id="img-modal-inner">
+    <button id="img-modal-close" onclick="closeModalBtn()">✕</button>
+    <img id="img-modal-img" src="" alt="">
+    <div id="img-modal-cap"></div>
+  </div>
+</div>
+
 <script>
+// ===== IMAGE MODAL =====
+function openModal(src, caption) {
+  document.getElementById('img-modal-img').src = src;
+  document.getElementById('img-modal-img').alt = caption;
+  document.getElementById('img-modal-cap').textContent = caption;
+  document.getElementById('img-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModalBtn() {
+  document.getElementById('img-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeModal(e) {
+  // close if clicking the dark backdrop (not the image itself)
+  if (e.target === document.getElementById('img-modal')) closeModalBtn();
+}
+
+// close on Escape key
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalBtn(); });
+
+// auto-wire every img inside an img-card
+document.querySelectorAll('.img-card').forEach(card => {
+  const img = card.querySelector('img');
+  const cap = card.querySelector('.cap');
+  if (!img) return;
+  img.addEventListener('click', () => {
+    openModal(img.src, cap ? cap.textContent : img.alt);
+  });
+});
+
 // ===== SCROLL FADE =====
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
