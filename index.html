@@ -169,26 +169,45 @@
 
   .timeline { display: flex; flex-direction: column; gap: 0; }
   .timeline-item {
-    display: grid; grid-template-columns: 70px 1fr;
-    gap: 1rem; position: relative;
+    display: grid; grid-template-columns: 72px 18px 1fr;
+    gap: 0; position: relative;
   }
+  /* vertical connector line through the dot column */
+  .timeline-item:not(:last-child) .tl-dot::after {
+    content: ''; position: absolute;
+    left: 50%; top: 100%;
+    transform: translateX(-50%);
+    width: 1px;
+    bottom: calc(-1.75rem - 2px);
+    height: 9999px; /* clipped by overflow */
+    background: rgba(200,168,75,0.2);
+  }
+  /* simpler: use a pseudo on the item itself */
   .timeline-item:not(:last-child)::after {
     content: ''; position: absolute;
-    left: 34px; top: 28px; bottom: -1px;
+    left: calc(72px + 8px); /* center of dot column */
+    top: 22px;
+    bottom: 0;
     width: 1px; background: rgba(200,168,75,0.2);
   }
   .tl-year {
     font-family: 'Playfair Display', serif;
-    font-size: 0.85rem; font-weight: 700;
-    color: var(--gold); padding-top: 0.2rem;
-    text-align: right; padding-right: 0.75rem;
+    font-size: 0.82rem; font-weight: 700;
+    color: var(--gold);
+    text-align: right; padding-right: 0.6rem;
+    padding-top: 0.15rem;
+    line-height: 1.2;
   }
-  .tl-content { padding-bottom: 1.75rem; padding-top: 0.1rem; }
+  .tl-dot-col {
+    display: flex; flex-direction: column; align-items: center;
+    padding-top: 0.2rem;
+  }
   .tl-dot {
-    position: absolute; left: 30px; top: 6px;
-    width: 9px; height: 9px; border-radius: 50%;
-    background: var(--red); border: 1px solid var(--gold);
+    width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+    background: var(--red); border: 1.5px solid var(--gold);
+    position: relative; z-index: 1;
   }
+  .tl-content { padding-bottom: 1.75rem; padding-left: 0.75rem; padding-top: 0.05rem; }
   .tl-content strong {
     display: block; font-size: 0.85rem;
     color: var(--white); font-weight: 500; margin-bottom: 0.25rem;
@@ -467,7 +486,7 @@
       <div class="timeline">
         <div class="timeline-item">
           <div class="tl-year">1945</div>
-          <div class="tl-dot"></div>
+          <div class="tl-dot-col"><div class="tl-dot"></div></div>
           <div class="tl-content">
             <strong>Soviet Occupation Begins</strong>
             <p>USSR troops stay in Hungary after defeating Nazi Germany. Communist Party begins consolidating power.</p>
@@ -475,7 +494,7 @@
         </div>
         <div class="timeline-item">
           <div class="tl-year">1949</div>
-          <div class="tl-dot"></div>
+          <div class="tl-dot-col"><div class="tl-dot"></div></div>
           <div class="tl-content">
             <strong>People's Republic Declared</strong>
             <p>Hungary becomes a full satellite state under Rákosi's Stalinist regime.</p>
@@ -483,7 +502,7 @@
         </div>
         <div class="timeline-item">
           <div class="tl-year">1953</div>
-          <div class="tl-dot"></div>
+          <div class="tl-dot-col"><div class="tl-dot"></div></div>
           <div class="tl-content">
             <strong>Stalin Dies</strong>
             <p>A thaw begins. Moderate Imre Nagy briefly becomes PM.</p>
@@ -491,7 +510,7 @@
         </div>
         <div class="timeline-item">
           <div class="tl-year">Feb 1956</div>
-          <div class="tl-dot"></div>
+          <div class="tl-dot-col"><div class="tl-dot"></div></div>
           <div class="tl-content">
             <strong>Khrushchev's Secret Speech</strong>
             <p>Denounces Stalin's crimes. Emboldens reform movements across the Eastern Bloc.</p>
@@ -499,7 +518,7 @@
         </div>
         <div class="timeline-item">
           <div class="tl-year">June 1956</div>
-          <div class="tl-dot"></div>
+          <div class="tl-dot-col"><div class="tl-dot"></div></div>
           <div class="tl-content">
             <strong>Polish Uprising</strong>
             <p>Workers revolt in Poznań, Poland. Protests spread — Hungary is watching.</p>
@@ -640,7 +659,6 @@
   <div class="student-info"><strong>Event</strong>Hungarian Revolution</div>
   <div class="student-info"><strong>Date</strong>October 23 – November 10, 1956</div>
   <div class="student-info"><strong>Unit</strong>8 — Events of the Cold War</div>
-  <div class="student-info"><strong>Theme</strong>Governance (GOV)</div>
 </div>
 
 <!-- ===== IMAGE MODAL ===== -->
