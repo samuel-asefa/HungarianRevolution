@@ -202,9 +202,7 @@
   .tl-content p { font-size: 0.8rem; color: rgba(245,240,232,0.55); line-height: 1.6; }
 
   /* ===================== IMAGES ===================== */
-  .img-grid {
-    display: grid; gap: 1rem; margin-top: 2rem;
-  }
+  .img-grid { display: grid; gap: 1rem; margin-top: 2rem; }
   .img-grid.two   { grid-template-columns: 1fr 1fr; }
   .img-grid.three { grid-template-columns: 1fr 1fr 1fr; }
   .img-grid.featured { grid-template-columns: 2fr 1fr; }
@@ -218,6 +216,7 @@
   .img-card img {
     width: 100%; object-fit: cover; display: block;
     transition: transform 0.4s ease;
+    cursor: zoom-in;
   }
   .img-card:hover img { transform: scale(1.03); }
   .img-card .cap {
@@ -361,8 +360,6 @@
   }
 
   /* ===================== IMAGE MODAL ===================== */
-  .img-card img { cursor: zoom-in; }
-
   #img-modal {
     display: none;
     position: fixed; inset: 0; z-index: 9999;
@@ -383,8 +380,7 @@
 
   #img-modal-inner {
     position: relative;
-    max-width: 900px;
-    width: 100%;
+    max-width: 900px; width: 100%;
     animation: modalSlideUp 0.25s ease;
   }
 
@@ -394,36 +390,25 @@
   }
 
   #img-modal-inner img {
-    width: 100%;
-    max-height: 80vh;
-    object-fit: contain;
-    display: block;
+    width: 100%; max-height: 80vh;
+    object-fit: contain; display: block;
     border-radius: 4px;
     border: 1px solid rgba(200,168,75,0.2);
   }
 
   #img-modal-cap {
-    margin-top: 0.75rem;
-    font-size: 0.78rem;
-    font-style: italic;
-    color: rgba(245,240,232,0.45);
-    text-align: center;
-    letter-spacing: 0.05em;
+    margin-top: 0.75rem; font-size: 0.78rem;
+    font-style: italic; color: rgba(245,240,232,0.45);
+    text-align: center; letter-spacing: 0.05em;
   }
 
   #img-modal-close {
-    position: absolute;
-    top: -1rem;
-    right: -1rem;
-    width: 2.2rem; height: 2.2rem;
-    border-radius: 50%;
+    position: absolute; top: -1rem; right: -1rem;
+    width: 2.2rem; height: 2.2rem; border-radius: 50%;
     background: rgba(200,168,75,0.15);
     border: 1px solid rgba(200,168,75,0.4);
-    color: var(--gold);
-    font-size: 1.1rem;
-    line-height: 1;
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
+    color: var(--gold); font-size: 1.1rem; line-height: 1;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
     transition: background 0.2s;
   }
   #img-modal-close:hover { background: rgba(200,168,75,0.3); }
@@ -441,9 +426,9 @@
   <div class="hero-content">
     <p class="hero-eyebrow">Unit 8 · Cold War Events</p>
     <h1 class="hero-title">The <span>Hungarian</span><br>Revolution</h1>
-    <p class="hero-sub">A nation rises against Soviet occupation — and is crushed by its tanks. The story of Hungary's doomed bid for freedom.</p>
+    <p class="hero-sub">In 1956, the people of Hungary tried to break free from Soviet control. It did not go well for them.</p>
     <div class="hero-tags">
-      <span class="tag">October–November 1956</span>
+      <span class="tag">October to November 1956</span>
       <span class="tag">Budapest, Hungary</span>
       <span class="tag">Cold War Proxy</span>
       <span class="tag">Soviet Crackdown</span>
@@ -456,16 +441,16 @@
 <div style="background:#0f0a03;">
 <section class="fade-in">
   <div class="section-label"><span>Historical Context</span></div>
-  <h2>Background: How Did Hungary<br>End Up Under Soviet Control?</h2>
+  <h2>How Did Hungary End Up<br>Under Soviet Control?</h2>
 
   <div class="context-grid">
     <div class="context-text">
-      <p>After World War II, Soviet forces occupied Hungary. Through rigged elections and political pressure, the Hungarian Communist Party — backed by Moscow — seized total control by 1949. Hungary became a Soviet satellite state: independent on paper, controlled by the USSR in reality.</p>
-      <p>The Stalinist leader Mátyás Rákosi ran Hungary as a police state. The secret police (the ÁVH) imprisoned and tortured thousands. The economy was gutted by forced Soviet-style collectivization. Hungarians suffered food shortages, political purges, and total suppression of free speech.</p>
-      <p>When Stalin died in 1953, a brief reform era began. Khrushchev's "Secret Speech" in 1956 — condemning Stalin's crimes — sent a wave of hope through Eastern Europe. If the USSR itself was criticizing Stalin, maybe change was possible.</p>
+      <p>After World War II ended in 1945, the Soviet Union took control of Hungary. They set up a communist government there even though most Hungarians did not want that. By 1949 Hungary was officially a Soviet satellite state, which basically means the USSR was running the country behind the scenes.</p>
+      <p>The leader they put in charge was Mátyás Rákosi and he ran the country like a dictatorship. His secret police force called the ÁVH arrested and tortured people who spoke out against the government. The economy was also doing really badly because of Soviet policies and a lot of people were struggling with food shortages.</p>
+      <p>Things started to change a little after Stalin died in 1953. In 1956 the new Soviet leader Khrushchev gave a speech where he actually admitted that Stalin had done terrible things. This gave people in Eastern Europe hope that the Soviet Union might loosen its grip a little.</p>
       <div class="pullquote">
-        <p>"We want a government independent of the Soviet Union — this is not negotiable."</p>
-        <cite>— Hungarian rebel slogan, October 1956</cite>
+        <p>"We want a government independent of the Soviet Union. This is not negotiable."</p>
+        <cite>Hungarian rebel slogan, October 1956</cite>
       </div>
     </div>
 
@@ -476,15 +461,15 @@
           <div class="tl-dot"></div>
           <div class="tl-content">
             <strong>Soviet Occupation Begins</strong>
-            <p>USSR troops stay in Hungary after defeating Nazi Germany. Communist Party begins consolidating power.</p>
+            <p>Soviet troops stay in Hungary after World War II ends. The Communist Party starts taking over.</p>
           </div>
         </div>
         <div class="timeline-item">
           <div class="tl-year">1949</div>
           <div class="tl-dot"></div>
           <div class="tl-content">
-            <strong>People's Republic Declared</strong>
-            <p>Hungary becomes a full satellite state under Rákosi's Stalinist regime.</p>
+            <strong>Hungary Becomes a Satellite State</strong>
+            <p>Hungary is now officially communist and fully under Soviet control.</p>
           </div>
         </div>
         <div class="timeline-item">
@@ -492,7 +477,7 @@
           <div class="tl-dot"></div>
           <div class="tl-content">
             <strong>Stalin Dies</strong>
-            <p>A thaw begins. Moderate Imre Nagy briefly becomes PM.</p>
+            <p>People across Eastern Europe start to wonder if things might get better. Imre Nagy briefly becomes Hungary's Prime Minister.</p>
           </div>
         </div>
         <div class="timeline-item">
@@ -500,15 +485,15 @@
           <div class="tl-dot"></div>
           <div class="tl-content">
             <strong>Khrushchev's Secret Speech</strong>
-            <p>Denounces Stalin's crimes. Emboldens reform movements across the Eastern Bloc.</p>
+            <p>Khrushchev publicly criticizes Stalin's crimes. This gives people across the Eastern Bloc a lot of hope.</p>
           </div>
         </div>
         <div class="timeline-item">
           <div class="tl-year">June 1956</div>
           <div class="tl-dot"></div>
           <div class="tl-content">
-            <strong>Polish Uprising</strong>
-            <p>Workers revolt in Poznań, Poland. Protests spread — Hungary is watching.</p>
+            <strong>Uprising in Poland</strong>
+            <p>Workers in Poznan, Poland protest against the government. Hungarians are watching closely.</p>
           </div>
         </div>
       </div>
@@ -518,11 +503,11 @@
   <div class="img-grid two" style="margin-top:2.5rem;">
     <div class="img-card">
       <img src="assets/rakosi.jpg" alt="Mátyás Rákosi" style="height:240px;">
-      <div class="cap">Mátyás Rákosi — Hungary's Stalinist leader</div>
+      <div class="cap">Mátyás Rákosi, Hungary's communist leader</div>
     </div>
     <div class="img-card">
       <img src="assets/soviet-occupation.jpg" alt="Soviet occupation" style="height:240px;">
-      <div class="cap">Soviet presence in postwar Eastern Europe</div>
+      <div class="cap">Soviet soldiers in Hungary after World War II</div>
     </div>
   </div>
 </section>
@@ -534,40 +519,41 @@
 <div class="event-bg">
 <section class="fade-in">
   <div class="section-label"><span>Event Details</span></div>
-  <h2>What Happened During the<br>Hungarian Revolution?</h2>
+  <h2>What Happened During<br>the Hungarian Revolution?</h2>
 
-  <p style="color:rgba(245,240,232,0.65);font-size:1rem;line-height:1.8;font-weight:300;max-width:750px;">On October 23, 1956, students marched through Budapest demanding democratic reforms and Soviet withdrawal. The peaceful protest turned into a full uprising when secret police opened fire on the crowd. Within days, the revolution spread across the entire country.</p>
+  <p style="color:rgba(245,240,232,0.65);font-size:1rem;line-height:1.8;font-weight:300;max-width:750px;">On October 23, 1956, students and workers marched through Budapest asking for democratic reforms and for Soviet troops to leave. The secret police fired into the crowd and things escalated very quickly from there. Within a few days the protests had turned into a full revolution across the whole country.</p>
 
   <div class="event-cards">
     <div class="event-card">
       <div class="card-num">01</div>
-      <div class="card-title">The Uprising Begins</div>
-      <p class="card-text">On October 23, over 200,000 students and workers marched in Budapest. They tore down the massive Stalin statue and demanded free elections and Soviet troop withdrawal. The ÁVH opened fire — but rebels fought back and seized weapons from army units that defected to join them.</p>
+      <div class="card-title">The Uprising Starts</div>
+      <p class="card-text">Over 200,000 people marched in Budapest on October 23. They pulled down a giant statue of Stalin and demanded free elections. When the secret police shot at the crowd, Hungarian soldiers actually switched sides and joined the protesters instead of stopping them.</p>
     </div>
     <div class="event-card">
       <div class="card-num">02</div>
-      <div class="card-title">Reform Government Forms</div>
-      <p class="card-text">Imre Nagy was reinstated as Prime Minister. He announced Hungary would withdraw from the Warsaw Pact and become neutral — like Austria. This was a direct threat to Soviet control over Eastern Europe. For a brief, hopeful moment, it seemed Hungary might win its freedom.</p>
+      <div class="card-title">A New Government Forms</div>
+      <p class="card-text">Imre Nagy was brought back as Prime Minister. He announced that Hungary was going to leave the Warsaw Pact and become a neutral country. This was a huge deal because it meant Hungary was basically telling the Soviet Union it did not want to be under their control anymore.</p>
     </div>
     <div class="event-card">
       <div class="card-num">03</div>
-      <div class="card-title">Cold War Connection</div>
-      <p class="card-text">The USSR could not allow a satellite state to break free — it would inspire others to do the same. The US had encouraged Eastern Europeans to resist via Radio Free Europe. But when it mattered, Eisenhower refused to intervene militarily, leaving Hungary completely on its own.</p>
+      <div class="card-title">The Cold War Side of It</div>
+      <p class="card-text">The Soviet Union could not let Hungary leave because it would encourage other countries to try the same thing. The US had been telling Eastern Europeans through Radio Free Europe to stand up to communism, but when the revolution happened Eisenhower did not send any military help. Hungary was left on its own.</p>
     </div>
   </div>
 
   <div class="img-grid featured" style="margin-top:2.5rem;">
     <div class="img-card">
       <img src="assets/protests.jpg" alt="Budapest protests" style="height:300px;">
-      <div class="cap">Students march in Budapest, October 23, 1956</div>
+      <div class="cap">Students marching in Budapest on October 23, 1956</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:1rem;">
       <div class="img-card">
         <img src="assets/stalin-statue.jpg" alt="Stalin statue torn down" style="height:143px;">
-        <div class="cap">Stalin's statue torn down — only the boots remained</div>
+        <div class="cap">Stalin's statue being torn down by protesters</div>
       </div>
       <div class="img-card">
-        <img src="assets/nagy.jpg" alt="Imre Nagy" style="height:143px; object-position: center top;">        <div class="cap">Imre Nagy, the reform Prime Minister</div>
+        <img src="assets/nagy.jpg" alt="Imre Nagy" style="height:143px; object-position: center top;">
+        <div class="cap">Imre Nagy, Prime Minister during the revolution</div>
       </div>
     </div>
   </div>
@@ -581,7 +567,7 @@
 <section class="fade-in">
   <div class="section-label"><span>Interactive Map</span></div>
   <h2>Where It All Happened</h2>
-  <p style="color:rgba(245,240,232,0.55);font-size:0.9rem;">Click any marker to learn about key locations. Toggle between views with the buttons below.</p>
+  <p style="color:rgba(245,240,232,0.55);font-size:0.9rem;">Click the markers to see what happened at each location. You can switch between Budapest locations and the wider Soviet Bloc view.</p>
 
   <div class="map-tabs">
     <button class="map-tab active" onclick="showLayer('key', this)">Key Locations</button>
@@ -591,9 +577,9 @@
   <div id="map"></div>
 
   <div class="map-legend">
-    <div class="legend-item"><div class="legend-dot" style="background:#c0392b;"></div><span>Battle / protest sites</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:#c0392b;"></div><span>Battle and protest sites</span></div>
     <div class="legend-item"><div class="legend-dot" style="background:#c8a84b;"></div><span>Key political locations</span></div>
-    <div class="legend-item"><div class="legend-dot" style="background:#2e6b3e;"></div><span>Soviet entry / staging</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:#2e6b3e;"></div><span>Soviet entry points</span></div>
   </div>
 </section>
 </div>
@@ -604,38 +590,38 @@
 <div style="background:#0f0a03;">
 <section class="fade-in">
   <div class="section-label"><span>Outcomes</span></div>
-  <h2>How Did It End — And Why Does It Matter?</h2>
+  <h2>How Did It End?</h2>
 
-  <p style="color:rgba(245,240,232,0.65);font-size:1rem;line-height:1.8;font-weight:300;max-width:750px;margin-bottom:2rem;">On November 4, 1956, the USSR launched "Operation Whirlwind" — sending over 1,000 tanks into Budapest. The revolution was crushed within two weeks. Imre Nagy was arrested, secretly tried, and executed in 1958.</p>
+  <p style="color:rgba(245,240,232,0.65);font-size:1rem;line-height:1.8;font-weight:300;max-width:750px;margin-bottom:2rem;">On November 4, 1956, the Soviet Union sent over 1,000 tanks into Budapest. The revolution was crushed in about a week. Imre Nagy was arrested, put on a secret trial, and executed in 1958.</p>
 
   <div class="stats-row">
-    <div class="stat-card"><span class="stat-num">1,000+</span><span class="stat-lbl">Soviet tanks deployed</span></div>
+    <div class="stat-card"><span class="stat-num">1,000+</span><span class="stat-lbl">Soviet tanks sent in</span></div>
     <div class="stat-card"><span class="stat-num">~2,700</span><span class="stat-lbl">Hungarians killed</span></div>
-    <div class="stat-card"><span class="stat-num">200k</span><span class="stat-lbl">refugees fled West</span></div>
+    <div class="stat-card"><span class="stat-num">200k</span><span class="stat-lbl">fled to the West</span></div>
     <div class="stat-card"><span class="stat-num">350</span><span class="stat-lbl">executed afterward</span></div>
   </div>
 
   <div class="outcome-strip">
     <div class="outcome-box defeat">
-      <h3>⚔ Short-Term: Brutal Defeat</h3>
-      <p>Approximately 2,500–3,000 Hungarians were killed. Around 200,000 fled as refugees to the West. Over 20,000 were arrested, and 350 were executed — including Imre Nagy. The revolution was completely crushed, and Hungary remained firmly under Soviet control.</p>
+      <h3>Short Term: Total Defeat</h3>
+      <p>Around 2,500 to 3,000 Hungarians were killed in the fighting. Over 200,000 people left Hungary as refugees. More than 20,000 were arrested and 350 were executed, including Imre Nagy. Hungary stayed under Soviet control and nothing really changed politically.</p>
     </div>
     <div class="outcome-box legacy">
-      <h3>🕊 Long-Term: A Lasting Legacy</h3>
-      <p>The revolution exposed Soviet brutality to the world. It revealed that the US policy of "rollback" — replacing communism with democracy — was hollow rhetoric. It inspired future resistance movements, and Hungary's memory of 1956 fueled the peaceful revolution that finally ended communism there in 1989.</p>
+      <h3>Long Term: It Still Mattered</h3>
+      <p>The crackdown made the Soviet Union look really bad to the rest of the world. It also proved that the US was not actually going to help Eastern Europeans fight back against communism even though they said they would. Hungary remembered 1956 and it helped lead to their peaceful break from communism in 1989.</p>
     </div>
   </div>
 
-  <div class="verdict-badge">⭐ Short-term victory for Communism — long-term moral defeat for the Soviet Union</div>
+  <div class="verdict-badge">Result: Short term win for Communism, long term loss for the Soviet Union's reputation</div>
 
   <div class="img-grid two" style="margin-top:2.5rem;">
     <div class="img-card">
       <img src="assets/tanks.webp" alt="Soviet tanks in Budapest" style="height:240px;">
-      <div class="cap">Soviet T-54 tanks in Budapest streets, November 1956</div>
+      <div class="cap">Soviet tanks in the streets of Budapest, November 1956</div>
     </div>
     <div class="img-card">
       <img src="assets/refugees.webp" alt="Hungarian refugees" style="height:240px;">
-      <div class="cap">200,000 Hungarians fled west after the crackdown</div>
+      <div class="cap">Hungarian refugees leaving the country after the crackdown</div>
     </div>
   </div>
 </section>
@@ -644,7 +630,7 @@
 <!-- ===== STUDENT BAR ===== -->
 <div class="student-bar">
   <div class="student-info"><strong>Event</strong>Hungarian Revolution</div>
-  <div class="student-info"><strong>Date</strong>October 23 – November 10, 1956</div>
+  <div class="student-info"><strong>Date</strong>October 23 to November 10, 1956</div>
   <div class="student-info"><strong>Unit</strong>8 — Events of the Cold War</div>
 </div>
 
@@ -658,7 +644,7 @@
 </div>
 
 <script>
-// ===== IMAGE MODAL =====
+// image modal
 function openModal(src, caption) {
   document.getElementById('img-modal-img').src = src;
   document.getElementById('img-modal-img').alt = caption;
@@ -673,14 +659,11 @@ function closeModalBtn() {
 }
 
 function closeModal(e) {
-  // close if clicking the dark backdrop (not the image itself)
   if (e.target === document.getElementById('img-modal')) closeModalBtn();
 }
 
-// close on Escape key
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalBtn(); });
 
-// auto-wire every img inside an img-card
 document.querySelectorAll('.img-card').forEach(card => {
   const img = card.querySelector('img');
   const cap = card.querySelector('.cap');
@@ -690,13 +673,13 @@ document.querySelectorAll('.img-card').forEach(card => {
   });
 });
 
-// ===== SCROLL FADE =====
+// scroll fade
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.08 });
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-// ===== MAP =====
+// map
 const map = L.map('map', { zoomControl: true, scrollWheelZoom: false }).setView([47.49, 19.04], 6);
 
 L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
@@ -712,22 +695,22 @@ function makeIcon(color, size=12) {
 }
 
 const keyLocations = [
-  { lat:47.4979, lng:19.0402, color:'#c0392b', title:'🏛 Parliament Building, Budapest', desc:'On October 25, Soviet and ÁVH forces opened fire on peaceful demonstrators here — killing over 100 people. Known as "Bloody Thursday," this massacre turned many Hungarians from protesters into armed revolutionaries.' },
-  { lat:47.492,  lng:19.055,  color:'#c0392b', title:'📻 Hungarian Radio HQ',            desc:'The revolution ignited here on the night of Oct. 23. Students tried to broadcast their 16 demands; secret police fired on them. Rebels stormed the building and seized the radio — the first shots of the revolution.' },
-  { lat:47.4877, lng:19.0747, color:'#c8a84b', title:'🗽 Stalin Statue (Városliget)',     desc:"Crowds tore down Budapest's massive Stalin statue on October 23, leaving only his boots. The most iconic image of the revolution — a symbol of the people rejecting Soviet rule." },
-  { lat:47.4884, lng:19.0634, color:'#c8a84b', title:'🏛 Hungarian Parliament (Political Center)', desc:"Imre Nagy addressed crowds from here, announcing Hungary's withdrawal from the Warsaw Pact on November 1. Days later, Soviet tanks surrounded the building." },
-  { lat:47.44,   lng:19.008,  color:'#c0392b', title:'⚔ Corvin Cinema — Rebel Stronghold', desc:'The most famous rebel stronghold. Young fighters (some as young as 13) used narrow lanes and rooftops to ambush Soviet tanks. They destroyed dozens before being overwhelmed on Nov. 8.' },
-  { lat:47.50,   lng:19.14,   color:'#2e6b3e', title:'🪖 Soviet Forces Entry — East Budapest', desc:'Soviet armored columns entered Budapest from the east on November 4, 1956 — launching Operation Whirlwind. Over 1,000 tanks and 150,000 troops deployed to crush the uprising.' },
-  { lat:48.15,   lng:17.11,   color:'#2e6b3e', title:'🚂 Bratislava — Soviet Logistics Hub', desc:'Soviet troops and armor moved through Czechoslovakia to reinforce the crackdown in Hungary, showing how tightly the USSR controlled the entire Eastern Bloc.' },
-  { lat:46.07,   lng:18.23,   color:'#c0392b', title:'🌉 Pécs — Southern Uprising',       desc:"Workers in Pécs established workers' councils and declared solidarity with Budapest. Like all provincial uprisings, it was crushed within days of the Soviet invasion." },
+  { lat:47.4979, lng:19.0402, color:'#c0392b', title:'Parliament Building, Budapest', desc:'On October 25, Soviet soldiers and the secret police fired on peaceful protesters here and killed over 100 people. This day became known as Bloody Thursday and it pushed a lot of people from peaceful protesting into armed fighting.' },
+  { lat:47.492,  lng:19.055,  color:'#c0392b', title:'Hungarian Radio HQ', desc:'The revolution basically started here on the night of October 23. Students tried to get their list of demands read on the radio and the secret police shot at them. Rebels then stormed the building and took it over.' },
+  { lat:47.4877, lng:19.0747, color:'#c8a84b', title:'Stalin Statue (Varosliget)', desc:'On October 23, protesters tore down the huge statue of Stalin here and only left his boots standing. It became one of the most famous images of the whole revolution.' },
+  { lat:47.4884, lng:19.0634, color:'#c8a84b', title:'Hungarian Parliament', desc:'Imre Nagy announced from here on November 1 that Hungary was leaving the Warsaw Pact. A few days later Soviet tanks were surrounding the building.' },
+  { lat:47.44,   lng:19.008,  color:'#c0392b', title:'Corvin Cinema (Rebel Stronghold)', desc:'This was the biggest rebel stronghold in the city. Some of the fighters here were only 13 years old. They used the tight alleyways around the cinema to ambush Soviet tanks and took out dozens of them before being overwhelmed on November 8.' },
+  { lat:47.50,   lng:19.14,   color:'#2e6b3e', title:'Soviet Entry Point (East Budapest)', desc:'This is where Soviet tank columns entered Budapest on November 4 to start Operation Whirlwind. They brought over 1,000 tanks and 150,000 soldiers to crush the revolution.' },
+  { lat:48.15,   lng:17.11,   color:'#2e6b3e', title:'Bratislava (Soviet Staging Area)', desc:'Soviet troops and equipment passed through Czechoslovakia on their way to Hungary. It showed how much control the USSR had over all the countries in the Eastern Bloc.' },
+  { lat:46.07,   lng:18.23,   color:'#c0392b', title:'Pecs (Southern Uprising)', desc:'Workers in Pecs set up their own councils and supported the revolution in Budapest. Like everywhere else outside the capital, the uprising here was crushed quickly after the Soviet invasion.' },
 ];
 
 const blocCountries = [
-  { lat:52.52, lng:13.40, color:'#888', title:'🇩🇪 East Germany',  desc:"Soviet satellite state. Scene of a 1953 workers' uprising, also crushed by Soviet tanks. Closely watched Hungary's revolution with unease." },
-  { lat:50.07, lng:14.43, color:'#888', title:'🇨🇿 Czechoslovakia', desc:"Soviet satellite used as a staging ground for troops entering Hungary. Would later have its own uprising — the Prague Spring — in 1968." },
-  { lat:52.23, lng:21.01, color:'#888', title:'🇵🇱 Poland',         desc:"The Poznań workers' uprising in June 1956 directly inspired Hungarian students. Poland negotiated limited reforms rather than armed revolt." },
-  { lat:44.80, lng:20.46, color:'#888', title:'🇷🇸 Yugoslavia',     desc:"Led by Tito, Yugoslavia had broken with Stalin in 1948. Imre Nagy sought asylum in the Yugoslav embassy — but was lured out and arrested by Soviet agents." },
-  { lat:55.75, lng:37.61, color:'#c0392b', title:'🇷🇺 Moscow — Soviet Command', desc:"Khrushchev and the Soviet Politburo debated for days before ordering the full invasion. They feared that allowing Hungary to leave the Warsaw Pact would trigger a chain reaction across Eastern Europe." },
+  { lat:52.52, lng:13.40, color:'#888', title:'East Germany', desc:'Another Soviet satellite state. East Germany had its own workers uprising in 1953 that was also crushed by Soviet tanks. They were watching what happened in Hungary very nervously.' },
+  { lat:50.07, lng:14.43, color:'#888', title:'Czechoslovakia', desc:'The Soviet Union used Czechoslovakia as a base to move troops into Hungary. Czechoslovakia would have its own attempt at reform called the Prague Spring in 1968 which was also crushed.' },
+  { lat:52.23, lng:21.01, color:'#888', title:'Poland', desc:'The protests in Poznan, Poland in June 1956 were a big inspiration for the Hungarians. Poland ended up negotiating some small reforms with the USSR instead of going into full revolution.' },
+  { lat:44.80, lng:20.46, color:'#888', title:'Yugoslavia', desc:'Yugoslavia under Tito had already broken away from Stalin back in 1948. Imre Nagy hid in the Yugoslav embassy after the Soviet invasion but was tricked into leaving and then arrested.' },
+  { lat:55.75, lng:37.61, color:'#c0392b', title:'Moscow (Soviet Command)', desc:'Khrushchev and the Soviet leadership went back and forth for days before deciding to invade. They were scared that if Hungary got away with leaving the Warsaw Pact then every other satellite state would try the same thing.' },
 ];
 
 let keyLayer = L.layerGroup(), blocLayer = L.layerGroup();
